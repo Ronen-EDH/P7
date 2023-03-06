@@ -1,43 +1,36 @@
 import "./App.css";
 import { Posts } from "./components/Posts";
-import CreatePost from "./components/CreatePost";
+import { CreatePost } from "./components/CreatePost";
 import { useState } from "react";
-import Form from "react-bootstrap/Form";
+import { postData } from "./datas/PostData";
 
-function App() {
+export function App() {
   const [posts, setPosts] = useState([
     {
-      title: "Good Title",
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam doloribus eum, maxime consectetur adipisci veniam.",
+      title: postData[0].title,
+      text: postData[0].text,
+      img: postData[0].img,
+      isRead: postData[0].isRead,
     },
   ]);
 
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
-
-  // <input type="text" onChange={(e) => setTitle(e.target.value)}>
-  // <input type="text" onChange={(e) => setText(e.target.value)}>
-  const newTitle = () => {
-    return <Form.Control type="text" value={title} onChange={(e) => setTitle(e.target.value)} />;
-  };
-
-  // console.log("title:", title);
-
-  const newText = () => {
-    return <Form.Control as="textarea" rows={3} value={text} onChange={(e) => setText(e.target.value)} />;
-  };
-
-  const addNewPost = () => {
+  const addNewPost = (title, text) => {
     // console.log("I have been clicked");
-    return setPosts((prevPosts) => [...prevPosts, { title: title, text: text }]);
+    return setPosts((prevPosts) => [...prevPosts, { title: title, text: text, img: postData[0].img, isRead: true }]);
   };
+
+  const deletePost = (index) => {
+    const newPosts = [...posts];
+    newPosts.splice(index, 1);
+    setPosts(newPosts);
+  };
+
+  const toggle = (idx) => setPosts(posts.map((post, i) => (i == idx ? { ...post, isRead: !post.isRead } : post)));
 
   return (
     <div>
-      <CreatePost funcNewPost={addNewPost} funcNewTitle={newTitle()} funcNewText={newText()} postDisabled={title == "" || text == ""} />
-      <Posts posts={posts} />
+      <CreatePost funcNewPost={addNewPost} />
+      <Posts posts={posts} funcDeletePost={deletePost} funcToggle={toggle} />
     </div>
   );
 }
-
-export default App;
