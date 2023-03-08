@@ -7,9 +7,10 @@ export function CreatePost(props) {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
-  // function Func() {
-  //   return props.funcNewPost(title, text), setTitle(""), setText("");
-  // }
+  const addNewPost = () => {
+    // console.log("I have been clicked");
+    return props.funcSetPosts((prevPosts) => [...prevPosts, { title: title, text: text, img: "https://picsum.photos/300/200", isRead: true }]);
+  };
 
   return (
     <Form>
@@ -21,10 +22,14 @@ export function CreatePost(props) {
         <Form.Label>Text</Form.Label>
         <Form.Control as="textarea" rows={3} value={text} onChange={(e) => setText(e.target.value)} />
       </Form.Group>
+      <Form.Group controlId="formFile" className="mb-3">
+        <Form.Label>Default file input example</Form.Label>
+        <Form.Control type="file" />
+      </Form.Group>
       <StyledWrap>
         <Button
           onClick={() => {
-            props.funcNewPost(title, text);
+            addNewPost();
             setTitle("");
             setText("");
           }}
