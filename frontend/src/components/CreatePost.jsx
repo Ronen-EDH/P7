@@ -7,11 +7,6 @@ export function CreatePost(props) {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
-  const addNewPost = () => {
-    // console.log("I have been clicked");
-    return props.funcSetPosts((prevPosts) => [...prevPosts, { title: title, text: text, img: "https://picsum.photos/300/200", isRead: true }]);
-  };
-
   return (
     <Form>
       <Form.Group className="mb-3" controlId="post__Title">
@@ -29,7 +24,7 @@ export function CreatePost(props) {
       <StyledWrap>
         <Button
           onClick={() => {
-            addNewPost();
+            props.funcNewPost(title, text);
             setTitle("");
             setText("");
           }}

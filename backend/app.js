@@ -2,6 +2,7 @@ const express = require("express");
 const { db, connectToDb } = require("./models/db");
 // const sequelize = require("sequelize");
 const userRoutes = require("./routes/user");
+const postRoutes = require("./routes/posts");
 
 const app = express();
 
@@ -17,10 +18,11 @@ app.use(express.json());
 connectToDb();
 
 // How to do error catching for this?
-(async () => {
-  await db.sequelize.sync({ alter: true });
-})();
+// (async () => {
+//   await db.sequelize.sync({ alter: true });
+// })();
 
 app.use("/api/auth", userRoutes);
+app.use("/api/posts", postRoutes);
 
 module.exports = app;

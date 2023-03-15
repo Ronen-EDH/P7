@@ -24,6 +24,8 @@ exports.signup = (req, res, next) => {
 exports.login = (req, res, next) => {
   User.findOne({ where: { username: req.body.username } })
     .then((user) => {
+      // console.log("user.password:", user.password);
+      // console.log("req.body.password:", req.body.password);
       if (!user) {
         return res.status(401).json({
           error: "Invalid username or password",
@@ -47,12 +49,14 @@ exports.login = (req, res, next) => {
         .catch((error) => {
           res.status(500).json({
             error: error.message,
+            // msg: "from this place",
           });
         });
     })
     .catch((error) => {
       res.status(500).json({
         error: error.message,
+        // msg: "from this other place",
       });
     });
 };

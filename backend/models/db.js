@@ -10,6 +10,7 @@ const db = {};
 db.sequelize = sequelize;
 db.models = {};
 db.models.User = require("./user")(sequelize, Sequelize.DataTypes);
+db.models.Post = require("./post")(sequelize, Sequelize.DataTypes);
 
 const connectToDb = async () => {
   try {
@@ -20,23 +21,27 @@ const connectToDb = async () => {
   }
 };
 
-/* const User = db.models.User;
+const User = db.models.User;
+const Post = db.models.Post;
 
-User.sync().then(() => {
-  const user = User.build({ username: "apple", password: "strongpass" });
-  console.log(user.username);
-  // user
-  //   .save()
-  //   .then(() => {
-  //     res.status(201).json({
-  //       message: "User added successfully!",
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     res.status(500).json({
-  //       error: error.message,
-  //     });
-  //   });
-}); */
+User.hasMany(Post, {
+  foreignKey: {
+    //I don't know why but this one doesn't work :( (according to workbench, but it does seem to work when I actually assigning data
+    //"notNull Violation: post.userId cannot be null")
+    allowNull: false,
+  },
+});
+Post.belongsTo(User, {
+  foreignKey: {
+    allowNull: false,
+  },
+});
+
+sequelize
+  .sync({ alter: false, force: false })
+  .then(() => {})
+  .catch((err) => {
+    console.log(err);
+  });
 
 module.exports = { db, connectToDb };

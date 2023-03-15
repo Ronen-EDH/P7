@@ -1,29 +1,19 @@
-import "./App.css";
-import { Posts } from "./components/Posts";
-import { CreatePost } from "./components/CreatePost";
+import { Route, Routes, Navigate } from "react-router-dom";
+import { Login } from "./pages/Login";
+import { Main } from "./pages/Main";
+import { SignUp } from "./pages/SignUp";
 import { useState } from "react";
-import { postData } from "./datas/PostData";
 
 export function App() {
-  const [posts, setPosts] = useState(postData);
-
-  // const addNewPost = (title, text) => {
-  //   // console.log("I have been clicked");
-  //   return setPosts((prevPosts) => [...prevPosts, { title: title, text: text, img: postData[0].img, isRead: true }]);
-  // };
-
-  // const deletePost = (index) => {
-  //   const newPosts = [...posts];
-  //   newPosts.splice(index, 1);
-  //   setPosts(newPosts);
-  // };
-
-  // const toggle = (idx) => setPosts(posts.map((post, i) => (i == idx ? { ...post, isRead: !post.isRead } : post)));
+  const [token, setToken] = useState("");
+  console.log("token:", token);
 
   return (
-    <div>
-      <CreatePost posts={posts} funcSetPosts={setPosts} />
-      <Posts posts={posts} funcSetPosts={setPosts} />
-    </div>
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/login" element={<Login funcSetToken={setToken} />}></Route>
+      <Route path="/signup" element={<SignUp />}></Route>
+      <Route path="/posts" element={<Main token={token} />}></Route>
+    </Routes>
   );
 }
