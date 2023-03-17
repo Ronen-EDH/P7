@@ -4,14 +4,14 @@ import Form from "react-bootstrap/Form";
 import Navbar from "../components/Navbar";
 
 export function SignUp() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const body = {};
-    body.username = username;
+    body.email = email;
     body.password = pass;
 
     const options = {
@@ -32,7 +32,7 @@ export function SignUp() {
         alert("503 - Service Unavailable");
       });
 
-    setUsername("");
+    setEmail("");
     setPass("");
   };
 
@@ -40,14 +40,14 @@ export function SignUp() {
     <>
       <Navbar />
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formUsername">
-          <Form.Label>Username</Form.Label>
-          <Form.Control type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter username" />
+        <Form.Group className="mb-3" controlId="formEmail">
+          <Form.Label>Email</Form.Label>
+          <Form.Control type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email address" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" value={pass} onChange={(e) => setPass(e.target.value)} placeholder="Enter Password" />
+          <Form.Control type="password" value={pass} onChange={(e) => setPass(e.target.value)} placeholder="Enter password" />
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit

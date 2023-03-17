@@ -1,10 +1,16 @@
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import styled from "styled-components";
 
 export function Post({ title, text, img, isRead, index, posts, funcSetPosts }) {
-  // console.log("posts", posts);
-  const toggle = (idx) => funcSetPosts(posts.map((post, i) => (i == idx ? { ...post, isRead: !post.isRead } : post)));
+  // This one need to be fixed
+  const toggle = (idx) =>
+    funcSetPosts(
+      posts.map((post, i) => {
+        i == idx ? { ...post, isRead: !post.isRead } : post;
+      })
+    );
 
   const deletePost = (index, posts) => {
     const newPosts = [...posts];
@@ -39,3 +45,30 @@ const StyledCard = styled(Card)`
   max-width: 400px;
   min-width: 280px;
 `;
+
+// let isRead = false;
+// console.log("id:", id);
+
+//This part probably should happen in posts
+// const [isRead, setIsRead] = useState(false);
+
+/*  useEffect(() => {
+    fetch("http://localhost:3000/api/posts/read/")
+      .then((response) => response.json())
+      .then((readPosts) => {
+        // console.log("readPosts:", readPosts);
+        readPosts.forEach(function (post) {
+          // console.log(post.postId);
+          if (post.postId == id) {
+            console.log("This was read");
+            setIsRead(true);
+          }
+        });
+      })
+      .catch((err) => {
+        console.log("Error: ", err);
+        alert("503 - Service Unavailable");
+      });
+  }, []); */
+
+// console.log("This comes after fetch");

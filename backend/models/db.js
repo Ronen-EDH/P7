@@ -11,6 +11,7 @@ db.sequelize = sequelize;
 db.models = {};
 db.models.User = require("./user")(sequelize, Sequelize.DataTypes);
 db.models.Post = require("./post")(sequelize, Sequelize.DataTypes);
+db.models.PostRead = require("./post_read")(sequelize, Sequelize.DataTypes);
 
 const connectToDb = async () => {
   try {
@@ -23,19 +24,17 @@ const connectToDb = async () => {
 
 const User = db.models.User;
 const Post = db.models.Post;
+const PostRead = db.models.PostRead;
 
-User.hasMany(Post, {
-  foreignKey: {
-    //I don't know why but this one doesn't work :( (according to workbench, but it does seem to work when I actually assigning data
-    //"notNull Violation: post.userId cannot be null")
-    allowNull: false,
-  },
-});
-Post.belongsTo(User, {
-  foreignKey: {
-    allowNull: false,
-  },
-});
+User.belongsToMany(Post, { through: PostRead });
+Post.belongsToMany(User, { through: PostRead });
+
+// sequelize
+//   .sync({ alter: false, force: false })
+//   .then(() => {})
+//   .catch((err) => {
+//     console.log(err);
+//   });
 
 sequelize
   .sync({ alter: false, force: false })
@@ -45,3 +44,34 @@ sequelize
   });
 
 module.exports = { db, connectToDb };
+
+/* sequelize
+  .sync({ alter: true, force: false })
+  .then(() => {
+    Post.bulkCreate([
+      { title: "Best Title", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam doloribus eum, maxime consectetur adipisci veniam.", img: "https://picsum.photos/300/200" },
+      { title: "Good Title", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.", img: "https://picsum.photos/300/200" },
+    ]);
+  })
+  .catch((err) => {
+    console.log(err);
+  }); */
+
+/*   let user, post;
+
+  sequelize
+    .sync({ alter: true, force: false })
+    .then(() => {
+      return User.findOne({ where: { email: "testapi@email.com" } });
+    })
+    .then((data) => {
+      user = data;
+      return Post.findAll();
+    })
+    .then((data) => {
+      post = data;
+      user.addPosts(post);
+    })
+    .catch((err) => {
+      console.log(err);
+    }); */

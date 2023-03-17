@@ -7,7 +7,7 @@ const User = db.models.User;
 
 exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then((hash) => {
-    User.create({ username: req.body.username, password: hash })
+    User.create({ email: req.body.email, password: hash })
       .then(() => {
         res.status(201).json({
           message: "User added successfully!",
@@ -22,13 +22,13 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  User.findOne({ where: { username: req.body.username } })
+  User.findOne({ where: { email: req.body.email } })
     .then((user) => {
       // console.log("user.password:", user.password);
       // console.log("req.body.password:", req.body.password);
       if (!user) {
         return res.status(401).json({
-          error: "Invalid username or password",
+          error: "Invalid email or password",
         });
       }
       bcrypt
@@ -36,7 +36,7 @@ exports.login = (req, res, next) => {
         .then((valid) => {
           if (!valid) {
             return res.status(401).json({
-              error: "Invalid username or password",
+              error: "Invalid email or password",
             });
           }
           console.log("Login successful!");

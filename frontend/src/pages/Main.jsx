@@ -97,10 +97,10 @@ export function Main(props) {
     // return [2, 3, 4];
   }
   const postsDb = fetchPosts();
-  console.log("postsDb:", postsDb);
+  // console.log("postsDb:", postsDb);
 
   const [posts, setPosts] = useState(postData);
-  console.log("posts:", posts);
+  // console.log("posts:", posts);
 
   const addNewPost = (title, text) => {
     return setPosts((prevPosts) => [...prevPosts, { title: title, text: text, img: postData[0].img, isRead: true }]);

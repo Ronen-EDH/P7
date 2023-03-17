@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Navbar from "../components/Navbar";
 
 export function Login(props) {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
 
   // .........
@@ -20,7 +20,7 @@ export function Login(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username: username,
+        email: email,
         password: pass,
       }),
     };
@@ -29,28 +29,28 @@ export function Login(props) {
       console.log("Error: ", err);
       alert("503 - Service Unavailable");
     });
-    if (response.status != 200) return alert("Invalid username or password");
+    if (response.status != 200) return alert("Invalid email or password");
 
     const body = await response.json();
 
     props.funcSetToken(body.token);
-    setUsername("");
+    setEmail("");
     setPass("");
-    window.location.href = "http://localhost:3000/api/posts/";
+    // window.location.href = "http://localhost:3000/api/posts/";
   };
 
   return (
     <>
       <Navbar />
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formUsername">
-          <Form.Label>Username</Form.Label>
-          <Form.Control type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter username" />
+        <Form.Group className="mb-3" controlId="formEmail">
+          <Form.Label>Email</Form.Label>
+          <Form.Control type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email address" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" value={pass} onChange={(e) => setPass(e.target.value)} placeholder="Enter Password" />
+          <Form.Control type="password" value={pass} onChange={(e) => setPass(e.target.value)} placeholder="Enter password" />
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit

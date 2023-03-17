@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       // Should I use STRING(1234)? or just STRING instead of TEXT?
       text: { type: DataTypes.TEXT, allowNull: false },
       img: { type: DataTypes.STRING },
-      isRead: { type: DataTypes.BOOLEAN },
+      // isRead: { type: DataTypes.BOOLEAN },
     },
     {}
   );

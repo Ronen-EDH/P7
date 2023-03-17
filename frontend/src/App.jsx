@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export function App() {
   const [token, setToken] = useState("");
-  console.log("token:", token);
+  // console.log("token:", token);
 
   return (
     <Routes>
