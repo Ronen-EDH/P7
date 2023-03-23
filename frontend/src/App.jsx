@@ -1,6 +1,6 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import { Login } from "./pages/Login";
-import { Main } from "./pages/Main";
+import { Posts } from "./pages/Posts";
 import { SignUp } from "./pages/SignUp";
 import { useEffect, useState } from "react";
 
@@ -19,7 +19,7 @@ export function App() {
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<Login funcSetIsUserLogedIn={setIsUserLogedIn} />}></Route>
       <Route path="/signup" element={<SignUp />}></Route>
-      {isUserLogedIn ? <Route path="/posts" element={<Main isUserLogedIn={isUserLogedIn} funcSetIsUserLogedIn={setIsUserLogedIn} />}></Route> : <Route path="/posts" element={<Navigate to="/login" />} />}
+      {isUserLogedIn ? <Route path="/posts" element={<Posts isUserLogedIn={isUserLogedIn} funcSetIsUserLogedIn={setIsUserLogedIn} />}></Route> : <Route path="/posts" element={<Navigate to="/login" />} />}
     </Routes>
   );
 }

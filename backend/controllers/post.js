@@ -15,26 +15,12 @@ exports.getAllPosts = (req, res, next) => {
     });
 };
 
-/* exports.userRead = (req, res, next) => {
+exports.isRead = (req, res, next) => {
   // console.log("Works");
-  PostRead.findAll({ attributes: ["postId"], where: { userId: req.auth.userId } })
+  console.log("body:", req.body);
+  PostRead.findOne({ where: { userId: req.auth.userId, postId: req.body.id } })
     .then((post) => {
-      res.status(200).json(post.map((x) => x.postId));
-    })
-    .catch((error) => {
-      res.status(400).json({
-        error: error.message,
-      });
-    });
-}; */
-
-exports.addPost = (req, res, next) => {
-  // req.body.post = JSON.parse(req.body.post)
-  Post.create({ title: req.body.title, text: req.body.text, img: req.body.img })
-    .then(() => {
-      res.status(200).json({
-        message: "Post created successfully!",
-      });
+      res.status(200).json(post);
     })
     .catch((error) => {
       res.status(400).json({
@@ -43,12 +29,13 @@ exports.addPost = (req, res, next) => {
     });
 };
 
-exports.isRead = (req, res, next) => {
-  // console.log("Works");
-  console.log("body:", req.body);
-  PostRead.findOne({ where: { userId: req.auth.userId, postId: req.body.id } })
-    .then((post) => {
-      res.status(200).json(post);
+exports.addPost = (req, res, next) => {
+  // req.body.post = JSON.parse(req.body.post)
+  Post.create({ title: req.body.title, text: req.body.text, img: req.body.img })
+    .then(() => {
+      res.status(200).json({
+        message: "Post created successfully!",
+      });
     })
     .catch((error) => {
       res.status(400).json({
@@ -69,6 +56,19 @@ exports.userRead = (req, res, next) => {
   PostRead.findOne({ where: { userId: req.auth.userId, postId: req.params.id } })
     .then((post) => {
       res.status(200).json(post);
+    })
+    .catch((error) => {
+      res.status(400).json({
+        error: error.message,
+      });
+    });
+}; */
+
+/* exports.userRead = (req, res, next) => {
+  // console.log("Works");
+  PostRead.findAll({ attributes: ["postId"], where: { userId: req.auth.userId } })
+    .then((post) => {
+      res.status(200).json(post.map((x) => x.postId));
     })
     .catch((error) => {
       res.status(400).json({

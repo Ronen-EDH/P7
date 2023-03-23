@@ -4,7 +4,6 @@ import Card from "react-bootstrap/Card";
 import styled from "styled-components";
 
 export function Post({ title, text, img, id, index, posts, funcSetPosts }) {
-  // This one need to be fixed
   const [isRead, setIsRead] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -29,6 +28,7 @@ export function Post({ title, text, img, id, index, posts, funcSetPosts }) {
       });
   }, []);
 
+  // This one need to be fixed
   const toggle = (idx) =>
     funcSetPosts(
       posts.map((post, i) => {
