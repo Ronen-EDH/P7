@@ -15,7 +15,7 @@ exports.getAllPosts = (req, res, next) => {
     });
 };
 
-exports.userRead = (req, res, next) => {
+/* exports.userRead = (req, res, next) => {
   // console.log("Works");
   PostRead.findAll({ attributes: ["postId"], where: { userId: req.auth.userId } })
     .then((post) => {
@@ -26,7 +26,7 @@ exports.userRead = (req, res, next) => {
         error: error.message,
       });
     });
-};
+}; */
 
 exports.addPost = (req, res, next) => {
   // req.body.post = JSON.parse(req.body.post)
@@ -43,7 +43,19 @@ exports.addPost = (req, res, next) => {
     });
 };
 
-exports.getSinglePost = (req, res, next) => {};
+exports.isRead = (req, res, next) => {
+  // console.log("Works");
+  console.log("body:", req.body);
+  PostRead.findOne({ where: { userId: req.auth.userId, postId: req.body.id } })
+    .then((post) => {
+      res.status(200).json(post);
+    })
+    .catch((error) => {
+      res.status(400).json({
+        error: error.message,
+      });
+    });
+};
 
 // const user = await User.findOne({
 //   attributes: ["id", "name", "email", "contact"],

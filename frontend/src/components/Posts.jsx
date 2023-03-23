@@ -4,15 +4,17 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 
 export const Posts = ({ posts, funcSetPosts }) => {
-  const [idsOfRead, setIdsOfRead] = useState([]);
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  // const [idsOfRead, setIdsOfRead] = useState([]);
+  // const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-  useEffect(() => {
+  /*   useEffect(() => {
     const options = {
       method: "GET",
       headers: { authorization: userInfo.token },
       "Content-Type": "application/json",
+      body: JSON.stringify(post.id),
     };
+    
 
     fetch("http://localhost:3000/api/posts/read/", options)
       .then((response) => response.json())
@@ -24,17 +26,17 @@ export const Posts = ({ posts, funcSetPosts }) => {
         console.log("Error: ", err);
         alert("503 - Service Unavailable");
       });
-  }, []);
-  let isRead;
+  }, []); */
+  // let isRead;
 
   const mapOfPosts = posts.map((post, i) => {
     // console.log(typeof post.id);
 
     //.includes() returns a boolean
-    isRead = idsOfRead.includes(parseInt(post.id));
+    // isRead = idsOfRead.includes(parseInt(post.id));
     // console.log(isRead);
 
-    return <Post title={post.title} text={post.text} img={post.img} isRead={isRead} key={i} index={i} posts={posts} funcSetPosts={funcSetPosts} />;
+    return <Post title={post.title} text={post.text} img={post.img} id={post.id} key={i} index={i} posts={posts} funcSetPosts={funcSetPosts} />;
   });
   return <CardGroup>{mapOfPosts}</CardGroup>;
 };

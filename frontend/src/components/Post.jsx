@@ -3,8 +3,32 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import styled from "styled-components";
 
-export function Post({ title, text, img, isRead, index, posts, funcSetPosts }) {
+export function Post({ title, text, img, id, index, posts, funcSetPosts }) {
   // This one need to be fixed
+  const [isRead, setIsRead] = useState(false);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+  console.log("id:", id);
+
+  useEffect(() => {
+    const options = {
+      method: "POST",
+      headers: { authorization: userInfo.token, "Content-Type": "application/json" },
+      body: JSON.stringify({ id: id }),
+    };
+
+    fetch("http://localhost:3000/api/posts/read/", options)
+      .then((response) => response.json())
+      .then((data) => {
+        setIsRead(data);
+        console.log("isRead:", isRead);
+      })
+      .catch((err) => {
+        console.log("Error: ", err);
+        alert("503 - Service Unavailable");
+      });
+  }, []);
+
   const toggle = (idx) =>
     funcSetPosts(
       posts.map((post, i) => {
