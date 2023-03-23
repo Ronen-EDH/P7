@@ -5,24 +5,32 @@ import { useEffect, useState } from "react";
 
 export const Posts = ({ posts, funcSetPosts }) => {
   const [idsOfRead, setIdsOfRead] = useState([]);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/posts/read/")
+    const options = {
+      method: "GET",
+      headers: { authorization: userInfo.token },
+      "Content-Type": "application/json",
+    };
+
+    fetch("http://localhost:3000/api/posts/read/", options)
       .then((response) => response.json())
       .then((readPosts) => {
         setIdsOfRead(readPosts);
+        console.log("readPosts:", readPosts);
       })
       .catch((err) => {
         console.log("Error: ", err);
         alert("503 - Service Unavailable");
       });
   }, []);
-  // console.log(posts);
   let isRead;
 
   const mapOfPosts = posts.map((post, i) => {
     // console.log(typeof post.id);
 
+    //.includes() returns a boolean
     isRead = idsOfRead.includes(parseInt(post.id));
     // console.log(isRead);
 

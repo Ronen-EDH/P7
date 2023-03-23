@@ -6,6 +6,31 @@ import { useState } from "react";
 export function CreatePost(props) {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+  function sendPost() {
+    const post = {};
+    post.title = title;
+    post.text = text;
+    post.img = "https://picsum.photos/300/200";
+
+    const options = {
+      method: "POST",
+      headers: { authorization: userInfo.token },
+      "Content-Type": "application/json",
+      body: JSON.stringify(post),
+    };
+    fetch("http://localhost:3000/api/posts/", options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        alert("503 - Service Unavailable");
+        console.log("Error! Check if server is up and running");
+        console.error(error);
+      });
+  }
 
   return (
     <Form>
@@ -19,7 +44,7 @@ export function CreatePost(props) {
       </Form.Group>
       <Form.Group controlId="formFile" className="mb-3">
         <Form.Label>Default file input example</Form.Label>
-        <Form.Control type="file" />
+        <Form.Control type="file" name="image" />
       </Form.Group>
       <StyledWrap>
         <Button
@@ -27,6 +52,7 @@ export function CreatePost(props) {
             props.funcNewPost(title, text);
             setTitle("");
             setText("");
+            sendPost();
           }}
           disabled={title == "" || text == ""}
           variant="primary"

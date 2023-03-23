@@ -3,6 +3,7 @@ const { db, connectToDb } = require("./models/db");
 // const sequelize = require("sequelize");
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/posts");
+const path = require("path");
 
 const app = express();
 
@@ -14,6 +15,8 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 connectToDb();
 

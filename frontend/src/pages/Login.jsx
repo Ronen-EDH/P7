@@ -1,15 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Navbar from "../components/Navbar";
+import { Navigate } from "react-router-dom";
+import { fetchNow } from "./Test";
 
-export function Login(props) {
+export function Login({ funcSetIsUserLogedIn }) {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [goToPostPage, setGoToPostPage] = useState(false);
+
+  // fetchNow().then((say) => console.log(say));
 
   // .........
   // const [token, setToken] = useState("");
   // https://beta.reactjs.org/learn/passing-data-deeply-with-context
+
+  // useEffect(() => {
+  //   if (goToPostPage) {
+  //     <Navigate to="/posts" />;
+  //   }
+  // }, [goToPostPage]);
+
+  // Not sure why but this one works only here
+  // and without the useEffect(which would have made more sense to me)
+  // How does it even run this part AFTER the handleSubmit() ?
+  if (goToPostPage) {
+    return <Navigate to="/posts" />;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,12 +49,18 @@ export function Login(props) {
     });
     if (response.status != 200) return alert("Invalid email or password");
 
-    const body = await response.json();
+    // window.location.href = "http://localhost:3000/api/posts/";
 
-    props.funcSetToken(body.token);
+    const body = await response.json();
+    if (!body) {
+      return null;
+    }
+    localStorage.setItem("userInfo", JSON.stringify(body));
+    console.log("body:", body);
     setEmail("");
     setPass("");
-    // window.location.href = "http://localhost:3000/api/posts/";
+    setGoToPostPage(true);
+    funcSetIsUserLogedIn(true);
   };
 
   return (
