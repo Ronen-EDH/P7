@@ -2,6 +2,7 @@ const { db } = require("../models/db");
 
 const Post = db.models.Post;
 const PostRead = db.models.PostRead;
+const User = db.models.User;
 
 exports.getAllPosts = (req, res, next) => {
   Post.findAll()
@@ -17,8 +18,9 @@ exports.getAllPosts = (req, res, next) => {
 
 exports.isRead = (req, res, next) => {
   // console.log("Works");
-  console.log("body:", req.body);
-  PostRead.findOne({ where: { userId: req.auth.userId, postId: req.body.id } })
+  // console.log("body:", req.body);
+  // if (req.body.id) {
+  PostRead.findOne({ where: { userId: req.auth.userId, postId: req.params.id } })
     .then((post) => {
       res.status(200).json(post);
     })
@@ -27,14 +29,23 @@ exports.isRead = (req, res, next) => {
         error: error.message,
       });
     });
+  // }
 };
 
 exports.addPost = (req, res, next) => {
-  // req.body.post = JSON.parse(req.body.post)
-  Post.create({ title: req.body.title, text: req.body.text, img: req.body.img })
-    .then(() => {
-      res.status(200).json({
-        message: "Post created successfully!",
+  // console.log("file:", req.file);
+  // console.log("req.body:", req.body);
+  let user, post;
+  const url = req.protocol + "://" + req.get("host");
+  Post.create({ title: req.body.title, text: req.body.text, img: url + "/assets/" + req.file.filename })
+    .then((newPost) => {
+      res.status(200).json(newPost);
+      User.findOne({ where: { id: req.auth.userId } }).then((data) => {
+        user = data;
+        Post.findOne({ where: { id: newPost.id } }).then((data) => {
+          post = data;
+          user.addPosts(post);
+        });
       });
     })
     .catch((error) => {
@@ -76,3 +87,32 @@ exports.userRead = (req, res, next) => {
       });
     });
 }; */
+
+/*   exports.addPost = (req, res, next) => {
+    // console.log("file:", req.file);
+    // console.log("req.body:", req.body);
+    let user, post;
+    const url = req.protocol + "://" + req.get("host");
+    Post.create({ title: req.body.title, text: req.body.text, img: url + "/assets/" + req.file.filename })
+      .then((newPost) => {
+        User.findOne({ where: { id: req.auth.userId } }).then((data) => {
+          user = data;
+          Post.findOne({ where: { id: newPost.id } }).then((data) => {
+            post = data;
+            user.addPosts(post);
+          });
+        });
+      })
+      //     .then((newPost) => {
+      //   console.log("newPost:", newPost);
+      //   res.status(200).json({
+      //     newPost,
+      //     // message: "Post created successfully!",
+      //   });
+      // })
+      .catch((error) => {
+        res.status(400).json({
+          error: error.message,
+        });
+      });
+  }; */

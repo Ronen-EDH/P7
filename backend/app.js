@@ -15,6 +15,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 
@@ -27,5 +28,8 @@ connectToDb();
 
 app.use("/api/auth", userRoutes);
 app.use("/api/posts", postRoutes);
+
+// GET ALL /posts
+// GET ONE /post/1
 
 module.exports = app;

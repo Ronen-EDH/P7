@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import { Navigate } from "react-router-dom";
 import { fetchNow } from "./Test";
 
-export function Login({ funcSetIsUserLogedIn }) {
+export function Login({ funcSetIsUserLogedIn, funcSetToken }) {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [goToPostPage, setGoToPostPage] = useState(false);
@@ -61,6 +61,7 @@ export function Login({ funcSetIsUserLogedIn }) {
     setPass("");
     setGoToPostPage(true);
     funcSetIsUserLogedIn(true);
+    funcSetToken(body.token);
   };
 
   return (

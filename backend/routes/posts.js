@@ -9,7 +9,7 @@ const postCtrl = require("../controllers/post");
 router.get("/", auth, postCtrl.getAllPosts);
 router.post("/", auth, multer, postCtrl.addPost);
 // router.get("/read/", auth, postCtrl.userRead);
-router.post("/read/", auth, postCtrl.isRead);
+router.get("/read/:id", auth, postCtrl.isRead);
 // router.get("/read/:id", auth, postCtrl.userRead);
 // router.get("/:id", auth, postCtrl.getSinglePost);
 

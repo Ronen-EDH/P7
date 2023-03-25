@@ -1,30 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import styled from "styled-components";
+import { TokenContext } from "../App";
 
 export function Post({ title, text, img, id, index, posts, funcSetPosts }) {
   const [isRead, setIsRead] = useState(false);
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  // const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-  console.log("id:", id);
-
+  // console.log("id:", id);
+  const token = useContext(TokenContext);
+  // console.log("contextTokenOnPost:", token);
   useEffect(() => {
     const options = {
-      method: "POST",
-      headers: { authorization: userInfo.token, "Content-Type": "application/json" },
-      body: JSON.stringify({ id: id }),
+      method: "GET",
+      headers: { authorization: token, "Content-Type": "application/json" },
     };
 
-    fetch("http://localhost:3000/api/posts/read/", options)
+    fetch(`http://localhost:3000/api/posts/read/${id}`, options)
       .then((response) => response.json())
       .then((data) => {
+        // console.log("data:", data);
         setIsRead(data);
-        console.log("isRead:", isRead);
+        // console.log("isRead:", isRead);
       })
       .catch((err) => {
         console.log("Error: ", err);
-        alert("503 - Service Unavailable");
+        // alert("503 - Service Unavailable");
       });
   }, []);
 
