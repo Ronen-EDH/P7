@@ -6,10 +6,10 @@ import { TokenContext } from "../App";
 
 export function Post({ title, text, img, id, index, posts, funcSetPosts }) {
   const [isRead, setIsRead] = useState(false);
-  // const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const [renderRead, setRenderRead] = useState(false);
 
   // console.log("id:", id);
-  const token = useContext(TokenContext);
+  const { token } = useContext(TokenContext);
   // console.log("contextTokenOnPost:", token);
   useEffect(() => {
     const options = {
@@ -26,17 +26,36 @@ export function Post({ title, text, img, id, index, posts, funcSetPosts }) {
       })
       .catch((err) => {
         console.log("Error: ", err);
-        // alert("503 - Service Unavailable");
+        alert("503 - Service Unavailable");
       });
-  }, []);
+  }, [renderRead]);
 
-  // This one need to be fixed
+  /*   // This one need to be fixed
   const toggle = (idx) =>
     funcSetPosts(
       posts.map((post, i) => {
         i == idx ? { ...post, isRead: !post.isRead } : post;
       })
-    );
+    ); */
+
+  // I want a re-render(only this element) after this button is pressed and the function ran
+  const toggleRead = () => {
+    const options = {
+      method: "PUT",
+      headers: { authorization: token, "Content-Type": "application/json" },
+    };
+
+    fetch(`http://localhost:3000/api/posts/read/${id}`, options)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setRenderRead(true);
+      })
+      .catch((err) => {
+        console.log("Error: ", err);
+        alert("503 - Service Unavailable");
+      });
+  };
 
   const deletePost = (index, posts) => {
     const newPosts = [...posts];
@@ -53,7 +72,7 @@ export function Post({ title, text, img, id, index, posts, funcSetPosts }) {
         {isRead ? (
           <Button variant="secondary">Read</Button>
         ) : (
-          <Button variant="primary" onClick={() => toggle(index)}>
+          <Button variant="primary" onClick={() => toggleRead()}>
             Unread
           </Button>
         )}

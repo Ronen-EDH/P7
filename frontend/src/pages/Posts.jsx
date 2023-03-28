@@ -10,11 +10,10 @@ import { TokenContext } from "../App";
 // Do I need to use useEffect() here and why?
 // Maybe becuase if someone adds a post while you are online you won't see it otherwise, only when you refresh?
 
-export function Posts({ isUserLogedIn, funcSetIsUserLogedIn }) {
-  const token = useContext(TokenContext);
+export function Posts() {
+  const { token } = useContext(TokenContext);
   console.log("contextToken:", token);
   const [posts, setPosts] = useState([]);
-  // const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   // console.log("userInfo:", userInfo);
 
   useEffect(() => {
@@ -46,7 +45,7 @@ export function Posts({ isUserLogedIn, funcSetIsUserLogedIn }) {
 
   return (
     <div>
-      <Navbar isUserLogedIn={isUserLogedIn} funcSetIsUserLogedIn={funcSetIsUserLogedIn} />
+      <Navbar />
       <CreatePost funcNewPost={addNewPost} />
       <CardGroup>{mapOfPosts}</CardGroup>
     </div>

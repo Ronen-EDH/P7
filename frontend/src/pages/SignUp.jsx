@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
+import { TokenContext } from "../App";
 
 export function SignUp() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const navigate = useNavigate();
+  const { updateToken } = useContext(TokenContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,10 +27,11 @@ export function SignUp() {
     };
 
     const x = fetch("http://localhost:3000/api/auth/signup", options)
+      .then((res) => res.json())
       .then((res) => {
-        if (res.status === 200) location.href = "http://localhost:5173/posts";
+        updateToken(res.token);
+        navigate("/posts");
       })
-      // .then((location.href = "http://localhost:5173/posts"))
       .catch((err) => {
         console.log("Error: ", err);
         alert("503 - Service Unavailable");

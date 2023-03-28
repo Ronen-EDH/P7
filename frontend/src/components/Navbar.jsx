@@ -2,6 +2,9 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { TokenContext } from "../App";
+import { useLocation } from "react-router-dom";
 
 // {
 //   isRead ? (
@@ -13,12 +16,19 @@ import { Link } from "react-router-dom";
 //   );
 // }
 
-function NavbarComp({ isUserLogedIn, funcSetIsUserLogedIn }) {
-  // let isUserLogedIn = true;
+function NavbarComp() {
+  const { token, clearToken } = useContext(TokenContext);
+  const location = useLocation();
 
-  function logOut() {
-    localStorage.clear();
-    funcSetIsUserLogedIn(false);
+  console.log("current location:", location.pathname);
+
+  function renderPath() {
+    let currentLocation = location.pathname;
+    if (currentLocation === "/posts") {
+      return <Nav.Link href="/profile">Profile page</Nav.Link>;
+    } else if (currentLocation === "/profile") {
+      return <Nav.Link href="/posts">Posts page</Nav.Link>;
+    }
   }
 
   return (
@@ -28,10 +38,13 @@ function NavbarComp({ isUserLogedIn, funcSetIsUserLogedIn }) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {isUserLogedIn ? (
-              <Nav.Link href="/login" onClick={logOut}>
-                Logout
-              </Nav.Link>
+            {token ? (
+              <>
+                {renderPath()}
+                <Nav.Link href="/login" onClick={clearToken}>
+                  Logout
+                </Nav.Link>
+              </>
             ) : (
               <>
                 <Nav.Link href="/login">Login</Nav.Link>

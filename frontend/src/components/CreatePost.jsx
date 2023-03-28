@@ -8,8 +8,7 @@ export function CreatePost(props) {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [img, setImg] = useState("");
-  // const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const token = useContext(TokenContext);
+  const { token } = useContext(TokenContext);
 
   /*   function sendPost() {
     const post = {};

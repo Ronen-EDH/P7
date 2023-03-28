@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Navbar from "../components/Navbar";
 import { Navigate } from "react-router-dom";
-import { fetchNow } from "./Test";
+import { TokenContext } from "../App";
 
-export function Login({ funcSetIsUserLogedIn, funcSetToken }) {
+export function Login() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [goToPostPage, setGoToPostPage] = useState(false);
+  const [validated, setValidated] = useState(false);
+  const { updateToken } = useContext(TokenContext);
 
   // fetchNow().then((say) => console.log(say));
 
@@ -25,12 +27,20 @@ export function Login({ funcSetIsUserLogedIn, funcSetToken }) {
   // Not sure why but this one works only here
   // and without the useEffect(which would have made more sense to me)
   // How does it even run this part AFTER the handleSubmit() ?
+
   if (goToPostPage) {
     return <Navigate to="/posts" />;
   }
 
   const handleSubmit = async (e) => {
+    const form = e.currentTarget;
     e.preventDefault();
+    e.stopPropagation();
+    if (form.checkValidity() === false) {
+    }
+    setValidated(true);
+
+    // e.preventDefault();
 
     const options = {
       method: "POST",
@@ -49,33 +59,31 @@ export function Login({ funcSetIsUserLogedIn, funcSetToken }) {
     });
     if (response.status != 200) return alert("Invalid email or password");
 
-    // window.location.href = "http://localhost:3000/api/posts/";
-
     const body = await response.json();
     if (!body) {
       return null;
     }
-    localStorage.setItem("userInfo", JSON.stringify(body));
+    updateToken(body.token);
     console.log("body:", body);
     setEmail("");
     setPass("");
     setGoToPostPage(true);
-    funcSetIsUserLogedIn(true);
-    funcSetToken(body.token);
   };
 
   return (
     <>
       <Navbar />
-      <Form onSubmit={handleSubmit}>
+      {/* <Form onSubmit={handleSubmit}> */}
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formEmail">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email address" />
+          <Form.Control required type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email address" />
+          {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" value={pass} onChange={(e) => setPass(e.target.value)} placeholder="Enter password" />
+          <Form.Control required type="password" name="password" value={pass} onChange={(e) => setPass(e.target.value)} placeholder="Enter password" />
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit

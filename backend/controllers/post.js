@@ -55,6 +55,28 @@ exports.addPost = (req, res, next) => {
     });
 };
 
+exports.toggleRead = (req, res, next) => {
+  let user, post;
+  User.findOne({ where: { id: req.auth.userId } })
+    .then((data) => {
+      user = data;
+      Post.findOne({ where: { id: req.params.id } }).then((data) => {
+        post = data;
+        user.addPosts(post);
+      });
+    })
+    .then(() => {
+      res.status(200).json({
+        message: "Post successfully read!",
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        error: error.message,
+      });
+    });
+};
+
 // const user = await User.findOne({
 //   attributes: ["id", "name", "email", "contact"],
 //   where: { email: req.body.email },

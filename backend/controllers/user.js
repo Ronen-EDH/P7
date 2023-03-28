@@ -8,9 +8,11 @@ const User = db.models.User;
 exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then((hash) => {
     User.create({ email: req.body.email, password: hash })
-      .then(() => {
-        res.status(201).json({
+      .then((user) => {
+        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET_KEY, { expiresIn: "24H" });
+        res.status(200).json({
           message: "User added successfully!",
+          token,
         });
       })
       .catch((error) => {
@@ -57,6 +59,30 @@ exports.login = (req, res, next) => {
       res.status(500).json({
         error: error.message,
         // msg: "from this other place",
+      });
+    });
+};
+
+exports.deleteAcc = (req, res, next) => {
+  User.findOne({ where: { id: req.auth.userId } })
+    .then((data) => {
+      let user;
+      user = data;
+      // console.log("user to delete:", user);
+      user
+        .destroy()
+        .then(() => {
+          res.status(201).json({
+            message: "Account successfully deleted!",
+          });
+        })
+        .catch(() => {
+          console.log("User not found");
+        });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        error: error.message,
       });
     });
 };
