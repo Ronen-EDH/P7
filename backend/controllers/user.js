@@ -86,3 +86,18 @@ exports.deleteAcc = (req, res, next) => {
       });
     });
 };
+
+exports.userInfo = (req, res, next) => {
+  User.findOne({ where: { id: req.auth.userId } })
+    .then((data) => {
+      let user;
+      user = data;
+      // console.log("User email:", user.email);
+      res.status(200).json(user.email);
+    })
+    .catch((error) => {
+      res.status(400).json({
+        error: error.message,
+      });
+    });
+};

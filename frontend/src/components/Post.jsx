@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import styled from "styled-components";
 import { TokenContext } from "../App";
 
-export function Post({ title, text, img, id, index, posts, funcSetPosts }) {
+export function Post({ title, text, file, id, index, posts, funcSetPosts }) {
   const [isRead, setIsRead] = useState(false);
   const [renderRead, setRenderRead] = useState(false);
 
@@ -65,7 +65,7 @@ export function Post({ title, text, img, id, index, posts, funcSetPosts }) {
 
   return (
     <StyledCard>
-      <Card.Img variant="top" src={img} alt="..." />
+      <Card.Img variant="top" src={file} alt="..." />
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Text>{text}</Card.Text>

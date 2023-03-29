@@ -49,8 +49,8 @@ module.exports = { db, connectToDb };
   .sync({ alter: true, force: false })
   .then(() => {
     Post.bulkCreate([
-      { title: "Best Title", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam doloribus eum, maxime consectetur adipisci veniam.", img: "https://picsum.photos/300/200" },
-      { title: "Good Title", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.", img: "https://picsum.photos/300/200" },
+      { title: "Best Title", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam doloribus eum, maxime consectetur adipisci veniam.", file: "https://picsum.photos/300/200" },
+      { title: "Good Title", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.", file: "https://picsum.photos/300/200" },
     ]);
   })
   .catch((err) => {

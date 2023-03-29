@@ -12,7 +12,7 @@ import { TokenContext } from "../App";
 
 export function Posts() {
   const { token } = useContext(TokenContext);
-  console.log("contextToken:", token);
+  // console.log("contextToken:", token);
   const [posts, setPosts] = useState([]);
   // console.log("userInfo:", userInfo);
 
@@ -35,12 +35,12 @@ export function Posts() {
   // console.log("postsDb:", posts);
 
   const addNewPost = (post) => {
-    return setPosts((prevPosts) => [...prevPosts, { id: post.id, title: post.title, text: post.text, img: post.img }]);
+    return setPosts((prevPosts) => [...prevPosts, { id: post.id, title: post.title, text: post.text, file: post.file }]);
   };
 
   const mapOfPosts = posts.map((post, i) => {
     // console.log("post:", post);
-    return <Post title={post.title} text={post.text} img={post.img} id={post.id} key={i} index={i} posts={posts} funcSetPosts={setPosts} />;
+    return <Post title={post.title} text={post.text} file={post.file} id={post.id} key={i} index={i} posts={posts} funcSetPosts={setPosts} />;
   });
 
   return (

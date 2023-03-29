@@ -5,6 +5,11 @@ const MIME_TYPE = {
   "image/jpg": "jpg",
   "image/png": "png",
   "image/webp": "webp",
+  "image/gif": "gif",
+  "video/mp4": "mp4",
+  "video/mpeg": "mpeg",
+  "video/x-msvideo": "avi",
+  "audio/mpeg": "mp3",
 };
 
 const storage = multer.diskStorage({
@@ -31,6 +36,6 @@ const upload = multer({
     }
     cb(null, true);
   },
-}).single("image");
+}).single("file");
 
 module.exports = upload;

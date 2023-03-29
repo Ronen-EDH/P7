@@ -11,7 +11,7 @@ export function SignUp() {
   const navigate = useNavigate();
   const { updateToken } = useContext(TokenContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const body = {};
@@ -26,19 +26,20 @@ export function SignUp() {
       body: JSON.stringify(body),
     };
 
-    const x = fetch("http://localhost:3000/api/auth/signup", options)
-      .then((res) => res.json())
-      .then((res) => {
-        updateToken(res.token);
-        navigate("/posts");
-      })
-      .catch((err) => {
-        console.log("Error: ", err);
-        alert("503 - Service Unavailable");
-      });
+    const response = await fetch("http://localhost:3000/api/auth/signup", options).catch((err) => {
+      console.log("Error: ", err);
+      alert("503 - Service Unavailable");
+    });
+    if (response.status != 200) return alert("Invalid email or password");
 
+    const res = await response.json();
+    if (!res) {
+      return null;
+    }
+    updateToken(res.token);
     setEmail("");
     setPass("");
+    navigate("/posts");
   };
 
   return (

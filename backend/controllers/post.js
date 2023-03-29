@@ -35,9 +35,12 @@ exports.isRead = (req, res, next) => {
 exports.addPost = (req, res, next) => {
   // console.log("file:", req.file);
   // console.log("req.body:", req.body);
+  if (req.fileValidationError) {
+    return res.status(400).json({ message: req.fileValidationError });
+  }
   let user, post;
   const url = req.protocol + "://" + req.get("host");
-  Post.create({ title: req.body.title, text: req.body.text, img: url + "/assets/" + req.file.filename })
+  Post.create({ title: req.body.title, text: req.body.text, file: url + "/assets/" + req.file.filename })
     .then((newPost) => {
       res.status(200).json(newPost);
       User.findOne({ where: { id: req.auth.userId } }).then((data) => {
