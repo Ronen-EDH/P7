@@ -8,11 +8,33 @@ import { TokenContext } from "../App";
 export function SignUp() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  // const [isPassValid, setIsPassValid] = useState(false);
   const navigate = useNavigate();
   const { updateToken } = useContext(TokenContext);
+  const [validated, setValidated] = useState(false);
+  let isPassValid;
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    // minLength: 8,
+    // minLowercase: 1,
+    // minUppercase: 1,
+    // minNumbers: 1,
+    // minSymbols: 1
+    const regex = /(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*/;
+    isPassValid = regex.test(pass);
+    console.log("isPassValid:", isPassValid);
+    if (isPassValid) setValidated(true);
+    /*     if (!isPassValid) {
+      // return alert("Password is not strong enough. The password must contain the following:\n- minimum of 8 characters\n- minimum 1 lower case letter\n- minimum 1 upper case letter\n- minimum 1 number\n- minimum 1 symbol");
+      return;
+    } */
 
     const body = {};
     body.email = email;
@@ -45,15 +67,17 @@ export function SignUp() {
   return (
     <>
       <Navbar />
+      {/* <Form onSubmit={handleSubmit}> */}
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formEmail">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email address" />
+          <Form.Control required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email address" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" value={pass} onChange={(e) => setPass(e.target.value)} placeholder="Enter password" />
+          <Form.Control required type="password" value={pass} onChange={(e) => setPass(e.target.value)} placeholder="Enter password" />
+          <Form.Control.Feedback type="invalid">Password is not strong enough. The password must contain the following:\n- minimum of 8 characters\n- minimum 1 lower case letter\n- minimum 1 upper case letter\n- minimum 1 number\n- minimum 1 symbol</Form.Control.Feedback>
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit

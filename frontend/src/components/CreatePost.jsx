@@ -80,7 +80,7 @@ export function CreatePost(props) {
             setText("");
             // sendPost();
           }} */
-          disabled={title == "" || text == ""}
+          disabled={title == ""}
           variant="primary"
           type="submit"
         >

@@ -2,10 +2,28 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { db } = require("../models/db");
 require("dotenv").config();
+const validator = require("validator");
 
 const User = db.models.User;
 
 exports.signup = (req, res, next) => {
+  if (!validator.isEmail(req.body.email))
+    return res.status(400).json({
+      error: "Email address is malformed",
+    });
+  /*
+    {
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1
+    }
+  */
+  if (!validator.isStrongPassword(req.body.password))
+    return res.status(400).json({
+      error: "Password is not strong enough",
+    });
   bcrypt.hash(req.body.password, 10).then((hash) => {
     User.create({ email: req.body.email, password: hash })
       .then((user) => {

@@ -38,9 +38,18 @@ exports.addPost = (req, res, next) => {
   if (req.fileValidationError) {
     return res.status(400).json({ message: req.fileValidationError });
   }
+  const data = {
+    title: req.body.title,
+  };
+  if (req.body.text) {
+    data.text = req.body.text;
+  }
+  if (req.file) {
+    const url = req.protocol + "://" + req.get("host");
+    data.file = url + "/assets/" + req.file.filename;
+  }
   let user, post;
-  const url = req.protocol + "://" + req.get("host");
-  Post.create({ title: req.body.title, text: req.body.text, file: url + "/assets/" + req.file.filename })
+  Post.create(data)
     .then((newPost) => {
       res.status(200).json(newPost);
       User.findOne({ where: { id: req.auth.userId } }).then((data) => {

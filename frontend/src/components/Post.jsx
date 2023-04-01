@@ -63,12 +63,14 @@ export function Post({ title, text, file, id, index, posts, funcSetPosts }) {
     funcSetPosts(newPosts);
   };
 
+  console.log("file:", file);
+
   return (
     <StyledCard>
-      <Card.Img variant="top" src={file} alt="..." />
+      {file ? <Card.Img variant="top" src={file} alt="..." /> : null}
       <Card.Body>
         <Card.Title>{title}</Card.Title>
-        <Card.Text>{text}</Card.Text>
+        {text ? <Card.Text>{text}</Card.Text> : null}
         {isRead ? (
           <Button variant="secondary">Read</Button>
         ) : (
