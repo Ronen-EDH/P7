@@ -29,13 +29,6 @@ const PostRead = db.models.PostRead;
 User.belongsToMany(Post, { through: PostRead });
 Post.belongsToMany(User, { through: PostRead });
 
-// sequelize
-//   .sync({ alter: false, force: false })
-//   .then(() => {})
-//   .catch((err) => {
-//     console.log(err);
-//   });
-
 sequelize
   .sync({ alter: false, force: false })
   .then(() => {})
@@ -46,11 +39,11 @@ sequelize
 module.exports = { db, connectToDb };
 
 /* sequelize
-  .sync({ alter: true, force: false })
+  .sync({ alter: false, force: true })
   .then(() => {
     Post.bulkCreate([
-      { title: "Best Title", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam doloribus eum, maxime consectetur adipisci veniam.", file: "https://picsum.photos/300/200" },
-      { title: "Good Title", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.", file: "https://picsum.photos/300/200" },
+      { title: "Best Title", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam doloribus eum, maxime consectetur adipisci veniam.", altText: "description of the image", file: "https://picsum.photos/300/200" },
+      { title: "Good Title", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.", file: "https://picsum.photos/300/200", altText: "description of the image" },
     ]);
   })
   .catch((err) => {

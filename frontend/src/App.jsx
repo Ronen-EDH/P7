@@ -4,6 +4,8 @@ import { Posts } from "./pages/Posts";
 import { SignUp } from "./pages/SignUp";
 import { useEffect, useState, createContext } from "react";
 import { Profile } from "./pages/Profile";
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import "./App.scss";
 
 export const TokenContext = createContext();
 

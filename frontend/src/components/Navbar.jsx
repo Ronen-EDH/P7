@@ -20,35 +20,50 @@ function NavbarComp() {
   const { token, clearToken } = useContext(TokenContext);
   const location = useLocation();
 
-  console.log("current location:", location.pathname);
+  // console.log("current location:", location.pathname);
 
   function renderPath() {
     let currentLocation = location.pathname;
     if (currentLocation === "/posts") {
-      return <Nav.Link href="/profile">Profile page</Nav.Link>;
+      return (
+        <Nav.Link href="/profile" className="fs-4">
+          Profile page
+        </Nav.Link>
+      );
     } else if (currentLocation === "/profile") {
-      return <Nav.Link href="/posts">Posts page</Nav.Link>;
+      return (
+        <Nav.Link href="/posts" className="fs-4">
+          Posts page
+        </Nav.Link>
+      );
     }
   }
 
+  // /src/assets/icon-left-font-monochrome-black.png
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="primary" expand="lg" className="navbar-dark">
       <Container>
-        <Navbar.Brand>Groupomania</Navbar.Brand>
+        <Navbar.Brand>
+          <img src="/src/assets/icon-left-font-monochrome-white.svg" width="auto" height="40" className="d-inline-block align-top" alt="Groupomania logo" />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {token ? (
               <>
                 {renderPath()}
-                <Nav.Link href="/login" onClick={clearToken}>
+                <Nav.Link href="/login" className="fs-4" onClick={clearToken}>
                   Logout
                 </Nav.Link>
               </>
             ) : (
               <>
-                <Nav.Link href="/login">Login</Nav.Link>
-                <Nav.Link href="/signup">Sign Up</Nav.Link>
+                <Nav.Link href="/login" className="fs-4">
+                  Login
+                </Nav.Link>
+                <Nav.Link href="/signup" className="fs-4">
+                  Sign Up
+                </Nav.Link>
               </>
             )}
           </Nav>

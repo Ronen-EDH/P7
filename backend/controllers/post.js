@@ -47,6 +47,7 @@ exports.addPost = (req, res, next) => {
   if (req.file) {
     const url = req.protocol + "://" + req.get("host");
     data.file = url + "/assets/" + req.file.filename;
+    data.altText = req.body.altText;
   }
   let user, post;
   Post.create(data)

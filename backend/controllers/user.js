@@ -9,7 +9,7 @@ const User = db.models.User;
 exports.signup = (req, res, next) => {
   if (!validator.isEmail(req.body.email))
     return res.status(400).json({
-      error: "Email address is malformed",
+      error: "Invalid email format",
     });
   /*
     {
@@ -22,7 +22,7 @@ exports.signup = (req, res, next) => {
   */
   if (!validator.isStrongPassword(req.body.password))
     return res.status(400).json({
-      error: "Password is not strong enough",
+      error: "Password is not strong enough!",
     });
   bcrypt.hash(req.body.password, 10).then((hash) => {
     User.create({ email: req.body.email, password: hash })
@@ -48,7 +48,7 @@ exports.login = (req, res, next) => {
       // console.log("req.body.password:", req.body.password);
       if (!user) {
         return res.status(401).json({
-          error: "Invalid email or password",
+          error: "Invalid email or password!",
         });
       }
       bcrypt
@@ -56,7 +56,7 @@ exports.login = (req, res, next) => {
         .then((valid) => {
           if (!valid) {
             return res.status(401).json({
-              error: "Invalid email or password",
+              error: "Invalid email or password!",
             });
           }
           console.log("Login successful!");
@@ -95,7 +95,7 @@ exports.deleteAcc = (req, res, next) => {
           });
         })
         .catch(() => {
-          console.log("User not found");
+          console.log("User not found!");
         });
     })
     .catch((error) => {

@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { CreatePost } from "../components/CreatePost";
 import Navbar from "../components/Navbar";
 import { Post } from "../components/Post";
-import { CardGroup } from "react-bootstrap";
+import { CardGroup, Container, Row, Col } from "react-bootstrap";
 import { postData } from "../datas/PostData";
 import { TokenContext } from "../App";
 
@@ -35,19 +35,29 @@ export function Posts() {
   // console.log("postsDb:", posts);
 
   const addNewPost = (post) => {
-    return setPosts((prevPosts) => [...prevPosts, { id: post.id, title: post.title, text: post.text, file: post.file }]);
+    return setPosts((prevPosts) => [...prevPosts, { id: post.id, title: post.title, text: post.text, file: post.file, altText: post.altText }]);
   };
 
   const mapOfPosts = posts.map((post, i) => {
     // console.log("post:", post);
-    return <Post title={post.title} text={post.text} file={post.file} id={post.id} key={i} index={i} posts={posts} funcSetPosts={setPosts} />;
+    return <Post title={post.title} text={post.text} file={post.file} altText={post.altText} id={post.id} key={i} index={i} posts={posts} funcSetPosts={setPosts} />;
   });
 
   return (
     <div>
       <Navbar />
       <CreatePost funcNewPost={addNewPost} />
-      <CardGroup>{mapOfPosts}</CardGroup>
+      <div className="m-3">{mapOfPosts}</div>
     </div>
   );
+}
+
+{
+  /* <div>
+<Navbar />
+<CreatePost funcNewPost={addNewPost} />
+<CardGroup>
+  <Container className="m-3"> {mapOfPosts}</Container>
+</CardGroup>
+</div> */
 }

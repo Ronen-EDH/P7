@@ -3,8 +3,9 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import styled from "styled-components";
 import { TokenContext } from "../App";
+// import "../styles/App.scss";
 
-export function Post({ title, text, file, id, index, posts, funcSetPosts }) {
+export function Post({ title, text, file, altText, id, index, posts, funcSetPosts }) {
   const [isRead, setIsRead] = useState(false);
   const [renderRead, setRenderRead] = useState(false);
 
@@ -63,11 +64,15 @@ export function Post({ title, text, file, id, index, posts, funcSetPosts }) {
     funcSetPosts(newPosts);
   };
 
-  console.log("file:", file);
+  // console.log("file:", file);
+  // console.log("altText:", altText);
+  if (!altText) {
+    altText = "No image description available";
+  }
 
   return (
-    <StyledCard>
-      {file ? <Card.Img variant="top" src={file} alt="..." /> : null}
+    <StyledCard className="border-primary ">
+      {file ? <Card.Img variant="top" src={file} alt={altText} /> : null}
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         {text ? <Card.Text>{text}</Card.Text> : null}
@@ -79,16 +84,16 @@ export function Post({ title, text, file, id, index, posts, funcSetPosts }) {
           </Button>
         )}
         {/* <Button variant="secondary">Read</Button> */}
-        <Button variant="danger" onClick={() => deletePost(index, posts)}>
+        {/* <Button variant="danger" onClick={() => deletePost(index, posts)}>
           Delete
-        </Button>
+        </Button> */}
       </Card.Body>
     </StyledCard>
   );
 }
 
 const StyledCard = styled(Card)`
-  width: 100%;
+  /* width: 100%; */
   max-width: 400px;
   min-width: 280px;
 `;
