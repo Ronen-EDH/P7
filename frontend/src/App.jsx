@@ -1,11 +1,9 @@
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
-import { Login } from "./pages/Login";
+import { SignIn } from "./pages/SignIn";
 import { Posts } from "./pages/Posts";
 import { SignUp } from "./pages/SignUp";
 import { useEffect, useState, createContext } from "react";
 import { Profile } from "./pages/Profile";
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import "./App.scss";
 
 export const TokenContext = createContext();
 
@@ -34,9 +32,9 @@ export function App() {
     if (!token) {
       setRenderPath(
         <>
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/posts" element={<Navigate to="/login" />} />
-          <Route path="/profile" element={<Navigate to="/login" />} />
+          <Route path="/" element={<Navigate to="/signin" />} />
+          <Route path="/posts" element={<Navigate to="/signin" />} />
+          <Route path="/profile" element={<Navigate to="/signin" />} />
         </>
       );
     } else {
@@ -44,7 +42,7 @@ export function App() {
         <>
           <Route path="/profile" element={<Profile />} />
           <Route path="/posts" element={<Posts />} />
-          <Route path="/login" element={<Navigate to="/posts" />} />
+          <Route path="/signin" element={<Navigate to="/posts" />} />
           <Route path="/" element={<Navigate to="/posts" />} />
         </>
       );
@@ -60,15 +58,15 @@ export function App() {
             <Route path="/" element={<Navigate to="/posts" />} />
             <Route path="/posts" element={<Posts />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/login" element={<Navigate to="/posts" />} />
+            <Route path="/signin" element={<Navigate to="/posts" />} />
             <Route path="/signup" element={<Navigate to="/posts" />} />
           </>
         ) : (
           <>
-            <Route path="/" element={<Navigate to="/login" />} />
-            <Route path="/posts" element={<Navigate to="/login" />} />
-            <Route path="/profile" element={<Navigate to="/login" />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Navigate to="/signin" />} />
+            <Route path="/posts" element={<Navigate to="/signin" />} />
+            <Route path="/profile" element={<Navigate to="/signin" />} />
+            <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
           </>
         )}
@@ -76,3 +74,15 @@ export function App() {
     </TokenContext.Provider>
   );
 }
+
+// return (
+//   <TokenContext.Provider value={{ token, updateToken, clearToken }}>
+//     <Routes>
+//       {renderPath}
+//       {/* <Route path="/" element={<Navigate to="/login" />} /> */}
+//       <Route path="/login" element={<Login />}></Route>
+//       <Route path="/signup" element={<SignUp />}></Route>
+//       <Route path="/profile" element={<Profile />}></Route>
+//     </Routes>
+//   </TokenContext.Provider>
+// );

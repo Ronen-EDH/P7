@@ -1,6 +1,5 @@
 const express = require("express");
-const { db, connectToDb } = require("./models/db");
-// const sequelize = require("sequelize");
+const { connectToDb } = require("./models/db");
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/posts");
 const path = require("path");
@@ -21,15 +20,7 @@ app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 connectToDb();
 
-// How to do error catching for this?
-// (async () => {
-//   await db.sequelize.sync({ alter: true });
-// })();
-
 app.use("/api/auth", userRoutes);
 app.use("/api/posts", postRoutes);
-
-// GET ALL /posts
-// GET ONE /post/1
 
 module.exports = app;

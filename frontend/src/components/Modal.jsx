@@ -3,24 +3,16 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useContext } from "react";
 import { TokenContext } from "../App";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function ProfileModal() {
   const { token, clearToken } = useContext(TokenContext);
   const [smShow, setSmShow] = useState(false);
   const navigate = useNavigate();
-  // const [goToLoginPage, setgoToLoginPage] = useState(false);
-
-  // if (goToLoginPage) {
-  //   return <Navigate to="/login" />;
-  // }
 
   function logOut() {
     clearToken();
-    // console.log("logOut runs");
-    // a re-render of the main page would be better here
-    navigate("/login");
-    // setgoToLoginPage(true);
+    navigate("/signin");
   }
 
   function DeleteAccount() {
@@ -51,7 +43,6 @@ export function ProfileModal() {
         </Modal.Header>
         <Modal.Body>Are you sure you want to Delete your account?</Modal.Body>
         <Modal.Footer>
-          {/* <Button variant="secondary">Keep account</Button> */}
           <Button onClick={DeleteAccount} variant="danger">
             Delete account
           </Button>

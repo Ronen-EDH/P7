@@ -37,34 +37,3 @@ sequelize
   });
 
 module.exports = { db, connectToDb };
-
-/* sequelize
-  .sync({ alter: false, force: true })
-  .then(() => {
-    Post.bulkCreate([
-      { title: "Best Title", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam doloribus eum, maxime consectetur adipisci veniam.", altText: "description of the image", file: "https://picsum.photos/300/200" },
-      { title: "Good Title", text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.", file: "https://picsum.photos/300/200", altText: "description of the image" },
-    ]);
-  })
-  .catch((err) => {
-    console.log(err);
-  }); */
-
-/*   let user, post;
-
-  sequelize
-    .sync({ alter: true, force: false })
-    .then(() => {
-      return User.findOne({ where: { email: "testapi@email.com" } });
-    })
-    .then((data) => {
-      user = data;
-      return Post.findAll();
-    })
-    .then((data) => {
-      post = data;
-      user.addPosts(post);
-    })
-    .catch((err) => {
-      console.log(err);
-    }); */

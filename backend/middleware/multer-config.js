@@ -6,10 +6,6 @@ const MIME_TYPE = {
   "image/png": "png",
   "image/webp": "webp",
   "image/gif": "gif",
-  "video/mp4": "mp4",
-  "video/mpeg": "mpeg",
-  "video/x-msvideo": "avi",
-  "audio/mpeg": "mp3",
 };
 
 const storage = multer.diskStorage({

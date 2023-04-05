@@ -41,11 +41,9 @@ exports.signup = (req, res, next) => {
   });
 };
 
-exports.login = (req, res, next) => {
+exports.signin = (req, res, next) => {
   User.findOne({ where: { email: req.body.email } })
     .then((user) => {
-      // console.log("user.password:", user.password);
-      // console.log("req.body.password:", req.body.password);
       if (!user) {
         return res.status(401).json({
           error: "Invalid email or password!",
@@ -59,8 +57,7 @@ exports.login = (req, res, next) => {
               error: "Invalid email or password!",
             });
           }
-          console.log("Login successful!");
-          // console.log(user.id);
+          console.log("Sign in successful!");
           const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET_KEY, { expiresIn: "24H" });
           res.status(200).json({
             token: token,
@@ -69,14 +66,12 @@ exports.login = (req, res, next) => {
         .catch((error) => {
           res.status(500).json({
             error: error.message,
-            // msg: "from this place",
           });
         });
     })
     .catch((error) => {
       res.status(500).json({
         error: error.message,
-        // msg: "from this other place",
       });
     });
 };
@@ -86,7 +81,6 @@ exports.deleteAcc = (req, res, next) => {
     .then((data) => {
       let user;
       user = data;
-      // console.log("user to delete:", user);
       user
         .destroy()
         .then(() => {
@@ -110,7 +104,6 @@ exports.userInfo = (req, res, next) => {
     .then((data) => {
       let user;
       user = data;
-      // console.log("User email:", user.email);
       res.status(200).json(user.email);
     })
     .catch((error) => {

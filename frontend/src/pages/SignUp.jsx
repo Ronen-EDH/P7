@@ -9,40 +9,14 @@ import { FormValidation } from "../components/FormValidationSignUp";
 export function SignUp() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  // const [isPassValid, setIsPassValid] = useState(false);
-  const navigate = useNavigate();
-  const { updateToken } = useContext(TokenContext);
-  // const [validated, setValidated] = useState(false);
-  // const [values, setValues] = useState({
-  //   email: "",
-  //   password: "",
-  // });
   const [errors, setErrors] = useState({});
-  // let isPassValid;
+  const { updateToken } = useContext(TokenContext);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const form = e.currentTarget;
-    // if (form.checkValidity() === false) {
-    //   e.preventDefault();
-    //   e.stopPropagation();
-    // }
-    // setValidated(true);
-    setErrors(FormValidation(email, pass));
-    // setValues({ ...values, [e.target.name]: e.target.value });
 
-    // minLength: 8,
-    // minLowercase: 1,
-    // minUppercase: 1,
-    // minNumbers: 1,
-    // minSymbols: 1
-    // const regex = /(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*/;
-    // isPassValid = regex.test(pass);
-    // console.log("isPassValid:", isPassValid);
-    // if (isPassValid) setValidated(true);
-    // if (!isPassValid) {
-    //   return alert("Password is not strong enough. The password must contain the following:\n- minimum of 8 characters\n- minimum 1 lower case letter\n- minimum 1 upper case letter\n- minimum 1 number\n- minimum 1 symbol");
-    // }
+    setErrors(FormValidation(email, pass));
 
     const body = {};
     body.email = email;
@@ -80,13 +54,10 @@ export function SignUp() {
       navigate("/posts");
     }
   };
-  // console.log("email:", email);
-  // console.log("pass:", pass);
 
   return (
     <>
       <Navbar />
-      {/* <Form onSubmit={handleSubmit}> */}
       <Form noValidate onSubmit={handleSubmit}>
         {/* <Form.Group className={`mb-3 ${validated && "was-validated"}`} controlId="formEmail"> */}
         <Form.Group className="mb-3" controlId="formEmail">
@@ -102,7 +73,7 @@ export function SignUp() {
           {errors.pass && <p style={{ color: "#d1515a" }}>{errors.pass}</p>}
         </Form.Group>
         <Button variant="primary" type="submit" disabled={email == "" || pass == ""}>
-          SignUp
+          Sign Up
         </Button>
       </Form>
     </>

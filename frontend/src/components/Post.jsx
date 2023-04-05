@@ -1,17 +1,14 @@
 import { useEffect, useState, useContext } from "react";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import styled from "styled-components";
 import { TokenContext } from "../App";
-// import "../styles/App.scss";
+import { Card, Button, Row, Col } from "react-bootstrap";
 
-export function Post({ title, text, file, altText, id, index, posts, funcSetPosts }) {
+export function Post({ title, text, file, altText, id }) {
   const [isRead, setIsRead] = useState(false);
   const [renderRead, setRenderRead] = useState(false);
 
-  // console.log("id:", id);
   const { token } = useContext(TokenContext);
-  // console.log("contextTokenOnPost:", token);
+
   useEffect(() => {
     const options = {
       method: "GET",
@@ -21,9 +18,7 @@ export function Post({ title, text, file, altText, id, index, posts, funcSetPost
     fetch(`http://localhost:3000/api/posts/read/${id}`, options)
       .then((response) => response.json())
       .then((data) => {
-        // console.log("data:", data);
         setIsRead(data);
-        // console.log("isRead:", isRead);
       })
       .catch((err) => {
         console.log("Error: ", err);
@@ -31,15 +26,6 @@ export function Post({ title, text, file, altText, id, index, posts, funcSetPost
       });
   }, [renderRead]);
 
-  /*   // This one need to be fixed
-  const toggle = (idx) =>
-    funcSetPosts(
-      posts.map((post, i) => {
-        i == idx ? { ...post, isRead: !post.isRead } : post;
-      })
-    ); */
-
-  // I want a re-render(only this element) after this button is pressed and the function ran
   const toggleRead = () => {
     const options = {
       method: "PUT",
@@ -58,69 +44,39 @@ export function Post({ title, text, file, altText, id, index, posts, funcSetPost
       });
   };
 
-  const deletePost = (index, posts) => {
-    const newPosts = [...posts];
-    newPosts.splice(index, 1);
-    funcSetPosts(newPosts);
-  };
-
-  // console.log("file:", file);
-  // console.log("altText:", altText);
   if (!altText) {
     altText = "No image description available";
   }
 
   return (
-    <StyledCard className="border-primary ">
-      {file ? <Card.Img variant="top" src={file} alt={altText} /> : null}
-      <Card.Body>
-        <Card.Title>{title}</Card.Title>
-        {text ? <Card.Text>{text}</Card.Text> : null}
-        {isRead ? (
-          <Button variant="secondary">Read</Button>
-        ) : (
-          <Button variant="primary" onClick={() => toggleRead()}>
-            Unread
-          </Button>
-        )}
-        {/* <Button variant="secondary">Read</Button> */}
-        {/* <Button variant="danger" onClick={() => deletePost(index, posts)}>
-          Delete
-        </Button> */}
-      </Card.Body>
-    </StyledCard>
+    <Row>
+      <Col lg={3} md={2} sm={1}>
+        <StyledCard className="m-2 shadow bg-white rounded">
+          {file ? <Card.Img variant="top" src={file} alt={altText} /> : null}
+          <Card.Body>
+            <Card.Title>{title}</Card.Title>
+            {text ? <Card.Text>{text}</Card.Text> : null}
+            {isRead ? (
+              <Button variant="secondary">Read</Button>
+            ) : (
+              <Button variant="primary" onClick={() => toggleRead()}>
+                Unread
+              </Button>
+            )}
+          </Card.Body>
+        </StyledCard>
+      </Col>
+    </Row>
   );
 }
 
 const StyledCard = styled(Card)`
+  @media (min-width: 769px) {
+    width: 29vw;
+  }
   /* width: 100%; */
-  max-width: 400px;
   min-width: 280px;
+  @media (max-width: 768px) {
+    max-width: 400px;
+  }
 `;
-
-// let isRead = false;
-// console.log("id:", id);
-
-//This part probably should happen in posts
-// const [isRead, setIsRead] = useState(false);
-
-/*  useEffect(() => {
-    fetch("http://localhost:3000/api/posts/read/")
-      .then((response) => response.json())
-      .then((readPosts) => {
-        // console.log("readPosts:", readPosts);
-        readPosts.forEach(function (post) {
-          // console.log(post.postId);
-          if (post.postId == id) {
-            console.log("This was read");
-            setIsRead(true);
-          }
-        });
-      })
-      .catch((err) => {
-        console.log("Error: ", err);
-        alert("503 - Service Unavailable");
-      });
-  }, []); */
-
-// console.log("This comes after fetch");
