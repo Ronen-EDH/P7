@@ -40,6 +40,14 @@ exports.signup = (req, res, next) => {
       });
   });
 };
+// This way is better!
+/*   const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET_KEY, { expiresIn: "24H" }, function (err) {
+  if (err) {
+    return res.status(403).json({
+      error: err,
+    });
+  }
+}); */
 
 exports.signin = (req, res, next) => {
   User.findOne({ where: { email: req.body.email } })

@@ -8,5 +8,5 @@ export function Header() {
     }
   }
 
-  return <header className="m-3">{renderPath()}</header>;
+  return <header className="mb-3">{renderPath()}</header>;
 }

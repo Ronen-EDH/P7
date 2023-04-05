@@ -1,4 +1,4 @@
-import Card from "react-bootstrap/Card";
+import { Card, Container } from "react-bootstrap";
 import Navbar from "../components/Navbar";
 import { ProfileModal } from "../components/Modal";
 import { useContext, useState } from "react";
@@ -27,15 +27,17 @@ export function Profile() {
   return (
     <>
       <Navbar />
-      <Header />
-      <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src="/src/assets/avatar-placeholder.png" />
-        <Card.Body>
-          <Card.Title>My Profile</Card.Title>
-          <Card.Text>Email: {userEmail}</Card.Text>
-          <ProfileModal />
-        </Card.Body>
-      </Card>
+      <Container>
+        <Header />
+        <Card style={{ width: "18rem" }}>
+          <Card.Img variant="top" src="/src/assets/avatar-placeholder.png" />
+          <Card.Body>
+            <Card.Title>My Profile</Card.Title>
+            <Card.Text>Email: {userEmail}</Card.Text>
+            <ProfileModal />
+          </Card.Body>
+        </Card>
+      </Container>
     </>
   );
 }

@@ -42,7 +42,7 @@ export function CreatePost(props) {
 
   return (
     <>
-      <Form className="m-3" onSubmit={(e) => submitForm(e)}>
+      <Form className="mb-5" onSubmit={(e) => submitForm(e)}>
         <Form.Group className="mb-3" controlId="post__Title">
           <Form.Label>Title</Form.Label>
           <Form.Control type="text" value={title} name="title" onChange={(e) => setTitle(e.target.value)} />
@@ -64,8 +64,6 @@ export function CreatePost(props) {
           Post
         </Button>
       </Form>
-      <br />
-      <br />
     </>
   );
 }

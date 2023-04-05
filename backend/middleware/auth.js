@@ -14,11 +14,3 @@ module.exports = (req, res, next) => {
     });
   }
 };
-
-/* decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY, function (err) {
-  if (err) {
-    return res.status(403).json({
-      error: err,
-    });
-  }
-}); */

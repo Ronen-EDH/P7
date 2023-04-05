@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "update": "npm-check-updates --upgrade && npm update",
+    "update": "ncu --upgrade --target minor && npm update",
     "format": "prettier --write ."
   },
   "dependencies": {
@@ -17,16 +17,16 @@
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9",
-    "react-router-dom": "^6.8.2",
-    "styled-components": "^5.3.8"
+    "react-router-dom": "^6.10.0",
+    "styled-components": "^5.3.9"
   },
   "devDependencies": {
-    "@types/react": "^18.0.27",
-    "@types/react-dom": "^18.0.10",
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
     "@types/styled-components": "^5.1.26",
     "@vitejs/plugin-react": "^3.1.0",
-    "npm-check-updates": "^16.7.10",
-    "prettier": "^2.8.4",
-    "vite": "^4.1.0"
+    "npm-check-updates": "^16.10.2",
+    "prettier": "^2.8.7",
+    "vite": "^4.2.1"
   }
 }

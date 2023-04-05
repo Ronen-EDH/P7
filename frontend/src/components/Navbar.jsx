@@ -28,13 +28,13 @@ function NavbarComp() {
 
   return (
     <Navbar bg="primary" expand="lg" className="navbar-dark">
-      <Container>
+      <Container className="d-flex">
         <Navbar.Brand>
-          <img src="/src/assets/icon-left-font-monochrome-white.svg" width="auto" height="40" className="d-inline-block align-top" alt="" />
+          <img src="/src/assets/icon-left-font-monochrome-white.svg" width="200" height="auto" className="d-inline-block align-top img-fluid" alt="" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+        <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
+          <Nav>
             {token ? (
               <>
                 {renderPath()}

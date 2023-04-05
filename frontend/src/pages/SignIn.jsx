@@ -13,6 +13,7 @@ export function SignIn() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    // Try
     e.preventDefault();
 
     const options = {
@@ -26,6 +27,7 @@ export function SignIn() {
       }),
     };
 
+    // Put it in a try-catch statment instead just .catch, look it up
     const response = await fetch("http://localhost:3000/api/auth/signin", options).catch((err) => {
       console.log("Error: ", err);
       alert("503 - Service Unavailable");
@@ -39,7 +41,7 @@ export function SignIn() {
       setError(res.error);
     } else {
       const body = await response.json();
-      // Do I have to count for this too, or is this just silly?
+      // Better way on backend
       if (body.token) {
         updateToken(body.token);
         setEmail("");
@@ -50,6 +52,7 @@ export function SignIn() {
         alert("Internal server error, please contact support!");
       }
     }
+    // catch
   };
 
   return (
