@@ -23,6 +23,6 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.22",
-    "npm-check-updates": "^16.10.2"
+    "npm-check-updates": "^16.10.7"
   }
 }
