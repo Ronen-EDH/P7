@@ -43,7 +43,7 @@ export function Posts() {
 
   const mapOfPosts = posts.map((post, i) => {
     return (
-      <React.Fragment key={i}>
+      <React.Fragment key={post.id}>
         <Col className="mb-4" lg={4} md={6} sm={12}>
           <Post title={post.title} text={post.text} file={post.file} altText={post.altText} id={post.id} index={i} />
         </Col>

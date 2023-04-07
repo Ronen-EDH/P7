@@ -1,9 +1,8 @@
 import { useState, useEffect, useContext } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { TokenContext } from "../App";
+import { Button, Container, Form } from "react-bootstrap";
 
 export function SignIn() {
   const [email, setEmail] = useState("");
@@ -58,21 +57,22 @@ export function SignIn() {
   return (
     <>
       <Navbar />
-      <Form noValidate onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formEmail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email address" />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" name="password" value={pass} onChange={(e) => setPass(e.target.value)} placeholder="Enter password" />
-          {error && <p style={{ color: "#d1515a" }}>{error}</p>}
-        </Form.Group>
-        <Button variant="primary" type="submit" disabled={email == "" || pass == ""}>
-          Sign In
-        </Button>
-      </Form>
+      <Container className="mt-5 d-flex justify-content-center align-items-center">
+        <Form noValidate onSubmit={handleSubmit} style={{ width: "300px" }}>
+          <Form.Group className="mb-3" controlId="formEmail">
+            <Form.Label>Email</Form.Label>
+            <Form.Control type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email address" />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control type="password" name="password" value={pass} onChange={(e) => setPass(e.target.value)} placeholder="Enter password" />
+            {error && <p style={{ color: "#d1515a" }}>{error}</p>}
+          </Form.Group>
+          <Button variant="primary" type="submit" disabled={email == "" || pass == ""}>
+            Sign In
+          </Button>
+        </Form>
+      </Container>
     </>
   );
 }

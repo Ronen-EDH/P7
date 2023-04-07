@@ -36,4 +36,16 @@ sequelize
     console.log(err);
   });
 
+/* sequelize
+  .sync({ alter: true, force: false })
+  .then(() => {
+    User.bulkCreate([
+      { email: "testapi@email.com", password: "testapi@email.com" },
+      { email: "testapi2@email.com", password: "testapi2@email.com" },
+    ]);
+  })
+  .catch((err) => {
+    console.log(err);
+  }); */
+
 module.exports = { db, connectToDb };

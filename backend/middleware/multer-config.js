@@ -27,7 +27,7 @@ const upload = multer({
   fileFilter: function (req, file, cb) {
     const extension = MIME_TYPE[file.mimetype];
     if (!extension) {
-      req.fileValidationError = "Fileupload error, invalid file extension";
+      req.fileValidationError = "\nFile upload error, invalid file extension!\n\nPlease upload only images or gif files.\n(The following file extensions are accepted: jpg, jpeg, png, webp, gif.)";
       return cb(null, false);
     }
     cb(null, true);

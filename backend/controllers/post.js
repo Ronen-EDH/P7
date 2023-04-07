@@ -35,6 +35,7 @@ exports.addPost = (req, res, next) => {
   }
   const data = {
     title: req.body.title,
+    createdBy: req.auth.userId,
   };
   if (req.body.text) {
     data.text = req.body.text;

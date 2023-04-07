@@ -3,8 +3,10 @@ const jwt = require("jsonwebtoken");
 const { db } = require("../models/db");
 require("dotenv").config();
 const validator = require("validator");
+const fs = require("fs");
 
 const User = db.models.User;
+const Post = db.models.Post;
 
 exports.signup = (req, res, next) => {
   if (!validator.isEmail(req.body.email))
@@ -85,6 +87,38 @@ exports.signin = (req, res, next) => {
 };
 
 exports.deleteAcc = (req, res, next) => {
+  Post.findAll({ where: { createdBy: req.auth.userId } })
+    .then((data) => {
+      console.log("data:", data);
+      if (data != []) {
+        console.log("it runs");
+        data.map((post) => {
+          if (post.file) {
+            const filename = post.file.split("/assets/")[1];
+            fs.unlink("assets/" + filename, () => {
+              console.log(post.file, "deleted!");
+            });
+          }
+        });
+        Post.destroy({ where: { createdBy: req.auth.userId } })
+          .then(() => {
+            // res.status(201).json({
+            //   message: "Posts successfully deleted!",
+            // });
+            console.log("Posts successfully deleted!");
+          })
+          .catch((error) => {
+            res.status(500).json({
+              error: error.message,
+            });
+          });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({
+        error: error.message,
+      });
+    });
   User.findOne({ where: { id: req.auth.userId } })
     .then((data) => {
       let user;
@@ -96,12 +130,14 @@ exports.deleteAcc = (req, res, next) => {
             message: "Account successfully deleted!",
           });
         })
-        .catch(() => {
-          console.log("User not found!");
+        .catch((error) => {
+          res.status(500).json({
+            error: error.message,
+          });
         });
     })
     .catch((error) => {
-      res.status(400).json({
+      res.status(500).json({
         error: error.message,
       });
     });
@@ -115,7 +151,7 @@ exports.userInfo = (req, res, next) => {
       res.status(200).json(user.email);
     })
     .catch((error) => {
-      res.status(400).json({
+      res.status(500).json({
         error: error.message,
       });
     });
