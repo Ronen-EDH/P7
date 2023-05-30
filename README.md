@@ -26,10 +26,11 @@ Ensured accessibility according to WCAG2.1 standards using WAVE tool and manual 
 ## Setup
 
 1. Clone the repo
-2. Open 2 terminals (Linux/Mac) or command prompts/PowerShell's (Windows) 
-3. Run npm install from both the backend and frontend folders
-4. You going to need an SQL server running on your PC, if you don't know how to install one, here is a tutorial video: https://youtu.be/OM4aZJW_Ojs
-5. After installing MySQL you need to create a .env file in the backend directory. Inside the file you need to create 3 variables: SEQUELIZE_User = "user",
+2. Open a terminal (Linux/Mac) or command prompt/PowerShell (Windows). 
+3. Navigate to the backend folder and from there Run "npm install"  
+4. Do step 2 and 3 for the frontend as well 
+5. You going to need an SQL server running on your PC, if you don't know how to install one, here is a tutorial video: https://youtu.be/OM4aZJW_Ojs
+6. After installing MySQL you need to create a .env file in the backend directory. Inside the file you need to create 3 variables: SEQUELIZE_User = "user",
 SEQUELIZE_PW = "password" and JWT_SECRET_KEY = "uXNcmPKD4subB2hCIStMpkKfCaukkkdYKicK3FF1x0kGPJ5br7Ism4M2mx4xtbZ"
 6. Replace the user & password (keeping the quotation marks) with your MySQL server username and password
 7. Create an assets folder in the src directory (../frontend/src/assets/)
