@@ -2,8 +2,8 @@ require("dotenv").config();
 
 module.exports = {
   HOST: "localhost",
-  USER: "root",
-  PASSWORD: process.env.SEQUELIZE_PW,
-  DATABASE: "groupomania-webapp",
+  USER: process.env.MYSQL_USER,
+  PASSWORD: process.env.MYSQL_PASSWORD,
+  DATABASE: process.env.MYSQL_DATABASE,
   DIALECT: "mysql",
 };
