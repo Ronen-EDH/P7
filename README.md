@@ -35,6 +35,6 @@ Ensured accessibility according to WCAG2.1 standards using WAVE tool and manual 
 7. After installing MySQL you need to create a .env file in the backend directory. Inside the file, you need to create 3 variables: `SEQUELIZE_User = "user"`, `SEQUELIZE_PW = "password"` and `JWT_SECRET_KEY = "uXNcmPKD4subB2hCIStMpkKfCaukkkdYKicK3FF1x0kGPJ5br7Ism4M2mx4xtbZ"`
 8. Replace the user & password (keeping the quotation marks) with your MySQL server username and password
 9. Create an assets folder in the backend directory (../backend/assets/)
-10. Run `npm run dev` in the backend directory
+10. Same way as in step 4 run `npm run dev` in the backend directory
 11. Do step 10 in the frontend directory
 12. Now all you need to do is open the http://localhost:5173/ address to access the web app
