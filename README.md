@@ -32,9 +32,9 @@ Ensured accessibility according to WCAG2.1 standards using WAVE tool and manual 
 4. Using Node.js Command Prompt - or a normal Command Prompt/PowerShell if you did the second option -  navigate into the backend folder and from there run `npm install`
 5. Do step 4 for the frontend folder as well
 6. You going to need an SQL server running on your PC, if you don't know how to install one, here is a tutorial video: https://youtu.be/OM4aZJW_Ojs (you only need the server, so you can do a Server only installation at "choosing a setup type" section)
-8. After installing MySQL you need to create a .env file in the backend directory. Inside the file, you need to create 3 variables: `SEQUELIZE_User = "user"`, `SEQUELIZE_PW = "password"` and `JWT_SECRET_KEY = "uXNcmPKD4subB2hCIStMpkKfCaukkkdYKicK3FF1x0kGPJ5br7Ism4M2mx4xtbZ"`
-9. Replace the user & password (keeping the quotation marks) with your MySQL server username and password
-10. Create an assets folder in the backend directory (../backend/assets/)
-11. Same way as in step 4 run `npm run dev` in the backend directory
-12. Do step 10 in the frontend directory
-13. Now all you need to do is open the http://localhost:5173/ address to access the web app
+7. After installing MySQL you need to create a .env file in the backend directory. Inside the file, you need to create 3 variables: `SEQUELIZE_User = "user"`, `SEQUELIZE_PW = "password"` and `JWT_SECRET_KEY = "uXNcmPKD4subB2hCIStMpkKfCaukkkdYKicK3FF1x0kGPJ5br7Ism4M2mx4xtbZ"`
+8. Replace the user & password (keeping the quotation marks) with your MySQL server username and password
+9. Create an assets folder in the backend directory (../backend/assets/)
+10. Same way as in step 4 run `npm run dev` in the backend directory
+11. Do step 10 in the frontend directory
+12. Now all you need to do is open the http://localhost:5173/ address to access the web app
