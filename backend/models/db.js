@@ -34,12 +34,12 @@ async function createDb() {
   // Open the connection to MySQL server
   const connection = mysql.createConnection({
     host: "localhost",
-    user: process.env.SEQUELIZE_User,
-    password: process.env.SEQUELIZE_PW,
+    user: dbConfig.USER,
+    password: dbConfig.PASSWORD,
   });
 
   // Run create database statement
-  connection.query(`CREATE DATABASE IF NOT EXISTS groupomania`, function (err, results) {
+  connection.query(`CREATE DATABASE IF NOT EXISTS ${dbConfig.DATABASE}`, function (err, results) {
     console.log(results);
     console.log(err);
   });

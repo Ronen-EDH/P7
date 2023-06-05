@@ -7,8 +7,8 @@
     "update:backend": "npm run --cwd backend update",
     "update:frontend": "npm run --cwd frontend update",
     "dev": "NPM_CONFIG_YES=true npx concurrently@latest --kill-others --names backend,frontend,database --prefix-colors auto 'npm run dev:backend' 'npm run dev:frontend' 'npm run dev:database'",
-    "dev:backend": "MYSQL_USER=user MYSQL_PASSWORD=password MYSQL_DATABASE=groupomania-webapp JWT_SECRET_KEY=uXNcmPKD4subB2hCIStMpkKfCaukkkdYKicK3FF1x0kGPJ5br7Ism4M2mx4xtbZ npm run --cwd backend dev",
+    "dev:backend": "MYSQL_USER=user MYSQL_PASSWORD=password MYSQL_DATABASE=groupomania JWT_SECRET_KEY=uXNcmPKD4subB2hCIStMpkKfCaukkkdYKicK3FF1x0kGPJ5br7Ism4M2mx4xtbZ npm run --cwd backend dev",
     "dev:frontend": "npm run --cwd frontend dev",
-    "dev:database": "docker rm -f mysql; docker run --rm -t --name mysql -e ALLOW_EMPTY_PASSWORD=yes -e MYSQL_USER=user -e MYSQL_PASSWORD=password -e MYSQL_DATABASE=groupomania-webapp -p 3306:3306 bitnami/mysql:latest"
+    "dev:database": "docker rm -f mysql; docker run --rm -t --name mysql -e ALLOW_EMPTY_PASSWORD=yes -e MYSQL_USER=user -e MYSQL_PASSWORD=password -e MYSQL_DATABASE=groupomania -p 3306:3306 bitnami/mysql:latest"
   }
 }
