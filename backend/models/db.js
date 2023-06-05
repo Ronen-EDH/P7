@@ -1,5 +1,6 @@
 const dbConfig = require("../config/db-config");
 const Sequelize = require("sequelize");
+const mysql = require("mysql2");
 
 const sequelize = new Sequelize(dbConfig.DATABASE, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
@@ -29,19 +30,52 @@ const PostRead = db.models.PostRead;
 User.belongsToMany(Post, { through: PostRead });
 Post.belongsToMany(User, { through: PostRead });
 
-sequelize
-  .sync({ alter: false, force: false })
-  .then(() => {})
-  .catch((err) => {
+async function createDb() {
+  // Open the connection to MySQL server
+  const connection = mysql.createConnection({
+    host: "localhost",
+    user: process.env.SEQUELIZE_User,
+    password: process.env.SEQUELIZE_PW,
+  });
+
+  // Run create database statement
+  connection.query(`CREATE DATABASE IF NOT EXISTS groupomania`, function (err, results) {
+    console.log(results);
     console.log(err);
   });
+
+  // Close the connection
+  connection.end();
+}
+
+const updateDb = () => {
+  // const result = await createDb();
+  sequelize
+    .sync({ alter: false, force: false })
+    .then(() => {})
+    .catch(console.log);
+};
+
+createDb().then(updateDb);
+
+// const updateDb = async () => {
+//   createDb().then(() => {
+//     sequelize
+//       .sync({ alter: false, force: false })
+//       .then(() => {})
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   });
+// };
 
 /* sequelize
   .sync({ alter: true, force: false })
   .then(() => {
     User.bulkCreate([
-      { email: "testapi@email.com", password: "testapi@email.com" },
-      { email: "testapi2@email.com", password: "testapi2@email.com" },
+      { email: "testAPI1@email.com", password: "testAPI1@email.com" },
+      { email: "testAPI2@email.com", password: "testAPI2@email.com" },
+      { email: "testAPI3@email.com", password: "testAPI3@email.com" },
     ]);
   })
   .catch((err) => {
