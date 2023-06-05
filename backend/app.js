@@ -1,5 +1,4 @@
 const express = require("express");
-// const mysql = require("mysql2");
 const { connectToDb } = require("./models/db");
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/posts");
@@ -19,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 
-// connectToDb();
+connectToDb();
 
 app.use("/api/auth", userRoutes);
 app.use("/api/posts", postRoutes);
