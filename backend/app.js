@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 
-// connectToDb();
+connectToDb();
 
 app.use("/api/auth", userRoutes);
 app.use("/api/posts", postRoutes);
